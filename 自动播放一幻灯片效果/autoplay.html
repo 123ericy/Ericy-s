@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>轮播图练习1</title>
+    <style>
+        body {
+            background-color: burlywood;
+        }
+
+        body,
+        div,
+        ul,
+        li {
+            padding: 0;
+            margin: 0;
+        }
+
+        ul {
+            list-style-type: none;
+
+        }
+
+        #box {
+            width: 700px;
+            height: 330px;
+            position: relative;
+            margin: 10px auto;
+        }
+
+        #count {
+            width: 690px;
+            height: 320px;
+            position: relative;
+            border: 5px solid #ffffff;
+            border-radius: 5px;
+        }
+
+        #count .image {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform: all 2s;
+            opacity: 0;
+
+        }
+
+        #count .image img {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        #count .image.active {
+            opacity: 1;
+        }
+
+        #item {
+            position: absolute;
+            left: 15px;
+            bottom: 15px;
+        }
+
+        #item .num {
+            margin-left: 5px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, .4);
+            text-align: center;
+            float: left;
+            cursor: pointer;
+            text-indent: -9999px;
+            /* 缩进-9999像素为隐藏字符操作 */
+        }
+
+        #item .num.active {
+            background-color: #ffffff;
+        }
+
+        #prev,
+        #next {
+            cursor: pointer;
+            background: url(https://i1.mifile.cn/f/i/2014/cn/icon/icon-slides.png) no-repeat;
+        }
+
+        #prev {
+            background-position: -85px -15px;
+            /* 背景图片的位置计算,我是这样理解的。链接里的图片左上顶点为固定点,
+            一直拉到(你要写的距离),你想要的位置。所以x轴和y轴一般都为负数。 */
+
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            left: 0;
+            top: 150px;
+            border-radius: 50%;
+        }
+
+        #next {
+            background-position: -125px -15px;
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            right: 0;
+            top: 150px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+
+        <ul id="count">
+            <li class="image active">
+                <img src="http://www.visitxm.com/tpImagesUpload/index_middle/44.jpg">
+            </li>
+            <li class="image">
+                <img src="http://www.visitxm.com/tpImagesUpload/index_middle/tzs.jpg">
+            </li>
+            <li class="image">
+                <img src="http://www.visitxm.com/tpImagesUpload/index_middle/hls.jpg">
+            </li>
+            <li class="image">
+                <img src="http://www.visitxm.com/tpImagesUpload/index_middle/s123.jpg">
+            </li>
+            <li class="image">
+                <img src="http://www.visitxm.com/tpImagesUpload/index_middle/xmd.jpg">
+            </li>
+            <li class="image">
+                <img src="http://www.visitxm.com/tpImagesUpload/index_middle/612.jpg">
+            </li>
+        </ul>
+
+        <ul id="item">
+            <li class="num active">1</li>
+            <li class="num">2</li>
+            <li class="num">3</li>
+            <li class="num">4</li>
+            <li class="num">5</li>
+            <li class="num">6</li>
+        </ul>
+
+        <div id="prev"></div>
+        <div id="next"></div>
+
+    </div>
+
+    <script>
+        const li_high = document.getElementsByClassName('num');
+        const img_high = document.getElementsByClassName('image');
+        const prev_high = document.getElementById('prev');
+        const next_high = document.getElementById('next');
+
+        // for(let i = 0;i < li_high.length;i ++){
+        //     li_high[i].onmouseover = function() {
+        //         this.className = 'num active';
+        //         img_high[i].className = 'image active';
+        //     }
+
+        //     li_high[i].onmouseout = function() {
+        //         this.className = 'num';
+        //         img_high[i].className = 'image';
+        //     }
+        // }
+        //  如上感觉我个人很多逻辑思路和写法都是偏向于面向过程设计,js是面向对象语言...
+        //  看看下面的写法 以后多以对象方面考虑,即这个对象具有什么属性等等,先写出来...
+
+        var index = 0;
+
+        // const runActive = function () {
+        //     for (let i = 0; i < li_high.length; i++) {
+        //         li_high[i].className = 'num active';
+        //         img_high[i].className = 'image active';
+        //     } 
+        // }
+        //  单个高亮还是不要循环取值(即i)这样写,虽然显示的出来,但是i是一个数字一直循环的
+        //  利用index是个非常好的,前对应索引高亮的方法
+
+        const highActive = function () {
+            clearActive();
+            li_high[index].className = 'num active';
+            img_high[index].className = 'image active';
+        }
+
+        const clearActive = function () {
+            for (let i = 0; i < li_high.length; i++) {
+                li_high[i].className = 'num';
+                img_high[i].className = 'image';
+            }
+        }
+
+        const goNext = function () {
+            // index ++;
+            // highActive();
+
+            // if( index == li_high.length - 1){
+            //     index = 0;
+            // }
+            //这里判断也有一点细节(上面是错误的逻辑关系不是我们想要的)，实现自增还是先执行函数，关系到index的取值
+        index == li_high.length - 1 ? index = 0 : index ++;
+            highActive();
+
+        }
+        next_high.onclick = function () {
+            goNext();
+        }
+
+        prev_high.onmouseover = next_high.onmouseover = function () {
+            this.style.backgroundColor = '#787c80';
+        }
+
+        prev_high.onmouseout = next_high.onmouseout = function () {
+            this.removeAttribute('style');
+        }
+
+        for(let i = 0;i < li_high.length;i ++){
+            li_high[i].onmouseover = function() {
+                index = i;
+                highActive();
+                clearInterval( myTime );
+            }
+
+            li_high[i].onmouseout = function() {
+                
+            // myTime = setInterval(function () {
+            //     goNext();
+            // },500)     这样相当于每次调用都开启多一个定时器了,行不通。
+            
+        }
+        }     
+
+        const myTime = setInterval(function () {
+            goNext();
+
+        },500)
+
+
+
+    </script>
+</body>
+
+</html>
