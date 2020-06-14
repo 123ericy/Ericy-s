@@ -1,89 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>自动播放一幻灯片效果</title>
     <style>
-        body{
+        body {
             background-color: cadetblue;
         }
-        #wrap{
-           width: 490px;
-           height: 170px;
-           position: relative;
-           margin: 0 auto;
-           padding: 0;
-           border: 8px #ffffff solid;
-        }
-      #list{
-          width: 490px;
-          height: 170px;
-          position: relative;
-          list-style-type: none;
-          padding: 0;
-          margin: 0;
-      }
-      .item{
-          width: 100%;
-          height: 100%;
-          position: absolute;
-          opacity: 0;
-          transition: all 2s;
-      }
-      .item.active{
-          z-index: 10;
-          opacity: 1;
-      }
-      #count{
-          list-style-type: none;
-          padding: 0;
-          right: 0;
-          bottom: -20px;
-          position: absolute;
-          z-index: 1000;
-      }
 
-      /* 父元素设置了相对定位或绝对定位，(即wrap容器)
+        #wrap {
+            width: 490px;
+            height: 170px;
+            position: relative;
+            margin: 0 auto;
+            padding: 0;
+            border: 8px #ffffff solid;
+        }
+
+        #list {
+            width: 490px;
+            height: 170px;
+            position: relative;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .item {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            opacity: 0;
+            transition: all 2s;
+        }
+
+        .item.active {
+            z-index: 10;
+            opacity: 1;
+        }
+
+        #count {
+            list-style-type: none;
+            padding: 0;
+            right: 0;
+            bottom: -20px;
+            position: absolute;
+            z-index: 1000;
+        }
+
+        /* 父元素设置了相对定位或绝对定位，(即wrap容器)
         元素会相对于离自己最近的设置了相对或绝对定位的父元素进行定位
         如果没有就会相对于整个页面进行right和bottom的定位。*/
-        
-      #count .point{
-          float: left;
-          color: #ffffff;
-          background-color: #f70;
-          border-radius: 100%;
-          margin-left: 5px;
-          text-align: center;
-          width: 20px;
-          height: 20px;
-          line-height: 20px;
-          cursor: pointer;
-          opacity: 0.5;
-          font-size: 12px;
-      }
-      #count .point.active{
-          opacity: 1;
-          font-weight: 700;
-      }
-      #prev{
-        background: url(https://i1.mifile.cn/f/i/2014/cn/icon/icon-slides.png) no-repeat -84px 50%;
-        left: 0;
-      }
-      #next{
-        background: url(https://i1.mifile.cn/f/i/2014/cn/icon/icon-slides.png) no-repeat -125px 50%;
-        right: 0;
-     }
-     #prev,#next{
-         position: absolute;
-         top: 70px;
-         width: 40px;
-         height: 40px; 
-         z-index: 100;
-         cursor: pointer;
-     }
+
+        #count .point {
+            float: left;
+            color: #ffffff;
+            background-color: #f70;
+            border-radius: 100%;
+            margin-left: 5px;
+            text-align: center;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            cursor: pointer;
+            opacity: 0.5;
+            font-size: 12px;
+        }
+
+        #count .point.active {
+            opacity: 1;
+            font-weight: 700;
+        }
+
+        #prev {
+            background: url(https://i1.mifile.cn/f/i/2014/cn/icon/icon-slides.png) no-repeat -84px 50%;
+            left: 0;
+        }
+
+        #next {
+            background: url(https://i1.mifile.cn/f/i/2014/cn/icon/icon-slides.png) no-repeat -125px 50%;
+            right: 0;
+        }
+
+        #prev,
+        #next {
+            position: absolute;
+            top: 70px;
+            width: 40px;
+            height: 40px;
+            z-index: 100;
+            cursor: pointer;
+        }
     </style>
 </head>
+
 <body>
     <div id="wrap">
         <ul id="list">
@@ -93,13 +105,13 @@
             <li class="item"><img src="images/04.jpg"></li>
             <li class="item"><img src="images/05.jpg"></li>
         </ul>
-        
+
         <ul id="count">
-            <li class="point active" data-index = "0">1</li>
-            <li class="point" data-index = "1">2</li>
-            <li class="point" data-index = "2">3</li>
-            <li class="point" data-index = "3">4</li>
-            <li class="point" data-index = "4">5</li>
+            <li class="point active" data-index="0">1</li>
+            <li class="point" data-index="1">2</li>
+            <li class="point" data-index="2">3</li>
+            <li class="point" data-index="3">4</li>
+            <li class="point" data-index="4">5</li>
         </ul>
 
         <div id="prev"></div>
@@ -112,69 +124,69 @@
         const points = document.getElementsByClassName('point'); //下面的列表点
         const goPrevBtn = document.getElementById('prev');  //上一张按钮
         const goNextBtn = document.getElementById('next');  //下一张按钮
-        
+
         var time = 0; //定时器图片跳转参,操纵time,避免点击列表按钮跳的时间不均匀。
 
         var index = 0; //表示第几张图片在展示,即第index张有active类名属性。
         //同时表示下面的第几个点高亮  下面的函数方法就是在不断操纵这个属性
 
-        const clearActive = function(){
-            for(let i = 0; i < items.length; i++){
-                items[i].className='item';    
+        const clearActive = function () {
+            for (let i = 0; i < items.length; i++) {
+                items[i].className = 'item';
             }
-            for(let i = 0; i < points.length; i++){
-                points[i].className='point';
+            for (let i = 0; i < points.length; i++) {
+                points[i].className = 'point';
             }
         }
 
-        const goIndex = function(){
+        const goIndex = function () {
             clearActive();
-            items[index].className='item active';
-            points[index].className='point active';
+            items[index].className = 'item active';
+            points[index].className = 'point active';
         }
 
-        var goNext = function(){
-            if( index < items.length - 1){   
-                index ++;   
+        var goNext = function () {
+            if (index < items.length - 1) {
+                index++;
             } else {
                 index = 0;
             }
             goIndex();
         }   //索引是从0开始的,而长度是从1开始的。所以长度-1。想简写可以写三目函数。
 
-        var goPrev = function(){
-            index > 0 ? index -- : index = items.length - 1
+        var goPrev = function () {
+            index > 0 ? index-- : index = items.length - 1
             goIndex();
         }
 
-        goNextBtn.addEventListener('click',() => {
+        goNextBtn.addEventListener('click', () => {
             goNext();
             time = 0;
-        } )
+        })
 
-        goNextBtn.onmouseover = function(){
-            this.style.backgroundColor='#787c80';
+        goNextBtn.onmouseover = function () {
+            this.style.backgroundColor = '#787c80';
         }
 
-        goNextBtn.onmouseout = function(){
+        goNextBtn.onmouseout = function () {
             this.removeAttribute('style');
         }
-        
-        goPrevBtn.addEventListener('click',()=>{
+
+        goPrevBtn.addEventListener('click', () => {
             goPrev();
             time = 0;
         })
 
-        goPrevBtn.onmouseover = function(){
-            this.style.backgroundColor='#787c80';
+        goPrevBtn.onmouseover = function () {
+            this.style.backgroundColor = '#787c80';
         }
 
-        goPrevBtn.onmouseout = function(){
+        goPrevBtn.onmouseout = function () {
             this.removeAttribute('style');
         }
 
-        for(let j = 0;j < points.length; j++){
-            points[j].addEventListener('mouseover',function(){
+        for (let j = 0; j < points.length; j++) {
+            points[j].addEventListener('mouseover', function () {
                 // const pointIndex = this.getAttribute('data-Index');
                 // index = pointIndex;
                 index = j;  //或者简单点可以这么干,获取当前的图片索引
@@ -182,8 +194,8 @@
                 clearInterval(startAuto);
             })
 
-            points[j].addEventListener('mouseout',() => {
-                startAuto  = setInterval(interval, 150);
+            points[j].addEventListener('mouseout', () => {
+                startAuto = setInterval(interval, 150);
                 time = 0;
             })
 
@@ -191,14 +203,15 @@
 
         var interval = () => {
             time ++;
-            if(time ==  20){
+            if (time == 20) {
                 goNext();
                 time = 0;
             }
         }
-        
+
         var startAuto = setInterval(interval, 150);   //实质是3000ms调用一次函数
-        
+
     </script>
 </body>
+
 </html>
