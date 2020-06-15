@@ -22,16 +22,23 @@ let getTotal = () => {
         if (tr[i].getElementsByTagName('input')[0].checked) {
             tr[i].className = 'content';
             selected += parseInt(tr[i].getElementsByTagName('input')[1].value);
-            price += parseFloat(tr[i].cells[4].innerHTML);  // .cells也是特殊的表格属性,存放这个表格每一行下面的所有单元格(也就是td元素) 
-            htmlStr += '<div><img src="'+tr[i].getElementsByTagName('img')[0].src+'"><span index="'+i+'">取消选择</span></div>' 
+            price += parseFloat(tr[i].cells[4].innerHTML); 
+            // .cells也是特殊的表格属性,存放这个表格每一行下面的所有单元格(也就是td元素) 
+            htmlStr += '<div><img src="' + tr[i].getElementsByTagName('img')[0].src + '"><span index="' + i + '">取消选择</span></div>';
         }
         else {
             tr[i].className = '';
         }
-        selectedTotal.innerHTML = selected;
-        priceTotal.innerHTML = price.toFixed(2); // toFixed() 方法可把 Number 四舍五入为指定小数位数的数字。
-        foot.innerHTML   = htmlStr;
     }
+    selectedTotal.innerHTML = selected;
+    priceTotal.innerHTML = price.toFixed(2); 
+    // toFixed() 方法可把 Number 四舍五入为指定小数位数的数字。
+    foot.innerHTML = htmlStr;
+
+    if(selected == 0){
+        foot.style.display = 'none';
+    } 
+    // 这里的判断条件和下方的(this.checked == false)不同,当前不选和全不选的区别  
 }
 
 for (let i = 0; i < checkInputs.length; i++) {
@@ -42,8 +49,8 @@ for (let i = 0; i < checkInputs.length; i++) {
                 checkInputs[j].checked = this.checked;
             }
         }
-        if (this.checked == false) {
-            for (let z = 0; z < checkAllInputs.length; z++) {
+        if (this.checked == false ) {
+            for (var z = 0; z < checkAllInputs.length; z++) {
                 checkAllInputs[z].checked = false;
             }
         }
@@ -53,7 +60,7 @@ for (let i = 0; i < checkInputs.length; i++) {
     }
 }
 
-up.onclick = function(){
+up.onclick = function () {
     up_up.innerHTML = up_up.innerHTML == '︾' ? '︽' : '︾';
     foot.style.display = foot.style.display == 'block' ? 'none' : 'block';
 }

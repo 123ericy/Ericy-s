@@ -3,7 +3,7 @@
   padding: 0;
 }
 body {
-  padding: 10px;
+  padding: 20px;
   color: #666;
 }
 img {
@@ -125,7 +125,7 @@ td {
 }
 #foot{
     position: absolute;
-    height: 100px;
+    height: 80px;
     width: 905px;
     background-color: #f0f0f0;
     bottom: 48px;
@@ -138,8 +138,11 @@ td {
     border: 1px solid #c8c8c8;
     overflow: hidden;
     width: 100px;
-    display: inline-block;  
+    display: block; 
+    float: left;     /* block和设置左浮动等价于display：inline-block?为啥效果是一样的*/
     position: relative;
+    margin-right: 10px;
+    margin-bottom: 10px;
 }
 #foot span{
     font-size: 12px;
@@ -149,5 +152,5 @@ td {
     color: RGB(226, 226, 226);
     background-color: RGBA(0,0,0,.5);
     padding: 2px 5px;
-    
+    cursor: pointer; 
 }
