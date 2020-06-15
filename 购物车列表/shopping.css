@@ -1,0 +1,153 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  padding: 10px;
+  color: #666;
+}
+img {
+  height: 80px;
+  width: 100px;
+  float: left;
+  margin-right: 10px;
+}
+table {
+  border-spacing: 0;
+  /* 清除单元格间隔 */
+  border-collapse: collapse;
+  /* 为表格设置合并边框模型,看起来浅一点 */
+  text-align: center;
+}
+th,
+td {
+  border: #cadeff 1px solid;
+}
+th {
+  background-color: #e2f2ff;
+  border-top: 3px solid #a7cbff;
+}
+td {
+  padding: 10px;
+  color: #444;
+}
+.content {
+  /* text-align: center; */
+  background-color: #e2f2ff;
+}
+.che {
+  width: 60px;
+}
+.goods {
+  width: 300px;
+}
+.goods label {
+  float: left;
+  text-align: left;
+  width: 180px;
+  margin-top: 20px;
+}
+.price {
+  width: 130px;
+}
+.count {
+  width: 100px;
+}
+.count input {
+  width: 50px;
+  height: 15px;
+  line-height: 15px;
+  float: left;
+  padding: 3px 0;
+  text-align: center;
+  border: 1px solid #aaa;
+}
+.count span {
+  background-color: #f0f0f0;
+  float: left;
+  width: 20px;
+  height: 21px;
+  line-height: 21px;
+  /* display: inline-block; */
+  border: 1px solid #e5e5e5;
+}
+.subtotal {
+  width: 150px;
+  color: #ff0000;
+  font-weight: bold;
+}
+.operation {
+  width: 80px;
+}
+.footer {
+  width: 945px;
+  margin-top: 10px;
+  padding: 10px 0;
+  background-color: #eaeaea;
+  background-image: linear-gradient(RGB(241, 241, 241), RGB(226, 226, 226));
+  border: 1px solid #c8c8c8;
+  overflow: hidden;
+  position: relative;
+}
+.footer ul {
+  list-style-type: none;
+}
+.footer ul li {
+  float: left;
+}
+.footer-1 {
+  width: 100px;
+  padding-left: 8px;
+}
+.footer-2 {
+  width: 350px;
+}
+.footer-3 {
+  width: 190px;
+  cursor: pointer;
+}
+.footer-4 {
+  width: 195px;
+}
+.footer-5 {
+  width: 100px;
+  letter-spacing: 5px;
+  text-align: center;
+  font-weight: bold;
+  color: #000000;
+}
+.footer-5 span {
+  background-color: #eeeeee;
+  padding: 12px 25px;
+}
+#all{
+    position: relative;
+}
+#foot{
+    position: absolute;
+    height: 100px;
+    width: 905px;
+    background-color: #f0f0f0;
+    bottom: 48px;
+    overflow: hidden;
+    border: 1px solid #c8c8c8;
+    display: none;
+    padding: 20px;
+}
+#foot div{
+    border: 1px solid #c8c8c8;
+    overflow: hidden;
+    width: 100px;
+    display: inline-block;  
+    position: relative;
+}
+#foot span{
+    font-size: 12px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: RGB(226, 226, 226);
+    background-color: RGBA(0,0,0,.5);
+    padding: 2px 5px;
+    
+}
