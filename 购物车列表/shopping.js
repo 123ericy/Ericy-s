@@ -26,7 +26,7 @@ let getTotal = () => {
             selected += parseInt(tr[i].getElementsByTagName('input')[1].value);
             price += parseFloat(tr[i].cells[4].innerHTML);
             // .cells也是特殊的表格属性,存放这个表格每一行下面的所有单元格(也就是td元素) 
-            htmlStr += '<div><img src="' + tr[i].getElementsByTagName('img')[0].src + '"><span className="del" index="' + i + '">取消选择</span></div>';
+            htmlStr += '<div><img src="' + tr[i].getElementsByTagName('img')[0].src + '"><span class="del" index="' + i + '">取消选择</span></div>';
         } else {
             tr[i].className = '';
         }
@@ -75,14 +75,16 @@ for (let i = 0; i < delet.length; i++) {
     }
 }
 
-// 已选商品的取消功能功能的实现(运用到事件代理(e参数)这个概念,代理到父元素上)
+// 已选商品的取消功能功能的实现(运用到事件代理(构建e参数的函数)这个概念,代理到父元素上)
 // 因为已选商品的浮层一开始是没有东西的,是动态生成的(有前置条件),不是已有的元素给他绑定事件是没有用的 
 foot.onclick = function (e) {
+    e = e || window.event;   // IE版本下的兼容。||: 两者取真值，两个为假取后者。
     let el = e.srcElement;
     if (el.className == 'del') {
-        const index = document.getAttribute('index');
-        const input = tr[index].getElementsByTagName('inputs')[0];
-        input.checked == false; 
+        let index = el.getAttribute('index');
+        let input = tr[index].getElementsByTagName('input')[0];
+        input.checked = false;
+        input.onclick();    // 调用选择按钮的触发事件(第46行)
     }
 
 }

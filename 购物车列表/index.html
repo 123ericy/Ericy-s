@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        body {
+            padding: 20px;
+        }
+
+        li {
+            float: left;
+            margin: 20px;
+        }
+
+        #total {
+            clear: both;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var all = document.getElementById('all');
+            var list = document.getElementById('list');
+            var inputs = list.getElementsByTagName('input');
+            var total = document.getElementById('total');
+            var num = document.getElementById('number');
+
+            var che = 0;
+
+            all.onclick = function () {
+                for(let i = 0; i < inputs.length; i++){
+                    inputs[i].checked = this.checked;
+                }
+            }
+
+            for (let i = 0; i < inputs.length; i++) {
+                inputs[i].onclick = function () {
+                    num.innerHTML = this.checked == true ? che += 1 : che -= 1;
+                }
+            }
+
+        }
+
+    </script>
+</head>
+
+<body>
+    <div><label><input id="all" type="checkbox" />全选</label></div>
+    <ul id="list">
+        <li><label><input type="checkbox" />选项1</label></li>
+        <li><label><input type="checkbox" />选项2</label></li>
+        <li><label><input type="checkbox" />选项3</label></li>
+        <li><label><input type="checkbox" />选项4</label></li>
+        <li><label><input type="checkbox" />选项5</label></li>
+        <li><label><input type="checkbox" />选项6</label></li>
+    </ul>
+    <div id="total">已选：<span id="number">0</span> 项</div>
+
+</body>
+
+</html>
